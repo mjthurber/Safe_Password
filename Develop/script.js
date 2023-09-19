@@ -6,27 +6,101 @@ function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
-
-
   // Get a reference to the button element
   var button = document.getElementById("#generate");
 }
   // Add a click event listener to the button
   button.addEventListener('click', function() {
-      // Use the prompt function to create a prompt dialog
-      var numChar = prompt('How many characters do you want?');
+    var numChar = parseInt(prompt('How many characters do you want?'));
+
+    if (isNaN(numChar) || numChar < 8 || numChar > 128) {
+        alert('Please enter a valid number between 8 and 128 characters.');
+        return;
+    }
+
+    var lowCase = prompt('Include lowercase? (Y/N)');
+    if (lowCase === null) return;
+
+    lowCase = lowCase.toUpperCase();
+
+    if (lowCase !== 'Y') {
+        alert('Please enter Y for Yes.');
+        return;
+    }
+
+    var uppCase = prompt('Include uppercase? (Y/N)');
+    if (uppCase === null) {
+        alert('Please enter Y for Yes or N for No.');
+        return;
+    }
+    uppCase = uppCase.toUpperCase();
+    if (uppCase !== 'Y' && uppCase !== 'N') {
+        alert('Please enter Y for Yes or N for No.');
+        return;
+    }
+
+    var num = prompt('Include numbers? (Y/N)');
+    if (num === null) {
+        alert('Please enter Y for Yes or N for No.');
+        return;
+    }
+    num = num.toUpperCase();
+    if (num !== 'Y' && num !== 'N') {
+        alert('Please enter Y for Yes or N for No.');
+        return;
+    }
+
+    var specChar = prompt('Include special characters? (Y/N)');
+    if (specChar === null) return;
+    specChar = specChar.toUpperCase();
+    if (specChar !== 'Y') {
+        alert('Please enter Y for Yes.');
+    } else {
+
+        function generateRandomPassword(length) {
+            const lowerCaseChars = 'abcdefghijklmnopqrstuvwxyz';
+            const upperCaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const numbers = '0123456789';
+            const specialChars = '!@#$%^&*()_+[]{}|;:,.<>?';
       
-      // Check if the user clicked "OK" and entered some text
-      if (numChar !== null || numChar <8 || numChar) {
-          // Display the user's input in the console
-          var lowCase = prompt('Include lowercase? (Y/N)')
-          if (lowCase = "Y") {
-            var uppCase = prompt('Include uppercase? (Y/N)')
+            const allChars = lowerCaseChars + upperCaseChars + numbers + specialChars;
+            let password = '';
+      
+            if (length < 4) {
+              return 'Password length must be at least 4 characters.';
+            }
+      
+            for (let i = 0; i < length; i++) {
+              const randomIndex = Math.floor(Math.random() * allChars.length);
+              password += allChars[randomIndex];
+            }
+      
+            return password;
           }
+      return;
+    }
+
+      
+      // Get user input for password numChar
+      const passwordnumChar = parseInt(prompt('Enter the desired password numChar:'));
+      
+      // Generate and display the random password
+      const generatedPassword = generateRandomPassword(passwordnumChar);
+      
+      if (generatedPassword !== 'Password numChar must be at least 4 characters.') {
+        console.log('Generated Password:', generatedPassword);
       } else {
-          console.log('No input provided');
+        console.log('Invalid password numChar.')
+        window.alert(generatedPassword);
       }
-  });
+    // At this point, you have collected the user's preferences for generating the password.
+    // You can now generate the password based on these preferences.
+});
+
+    // Now you have the user's input for generating the password
+    // You can proceed with generating the password based on the input
+
+   
   /*passwordText.value = password;
 
   var numCharacters = window.prompt("How many characters do you want")
